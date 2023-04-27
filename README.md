@@ -32,3 +32,16 @@ Neste exemplo, o script começa realizando o escaneamento de hosts ativos com o 
 Em seguida, o script utiliza o OpenVAS para realizar o escaneamento de vulnerabilidades em cada host ativo, salvando o resultado em arquivos com o nome de cada host.
 
 Por fim, o script utiliza o Metasploit para identificar as vulnerabilidades encontradas em cada host e selecionar e executar o módulo de exploit correto para cada falha.
+
+
+#Execução:
+
+Antes de executar o script, é importante definir os valores das variáveis utilizadas no script:
+
+rede: é o endereço da rede a ser analisada, no formato CIDR (ex: 192.168.0.0/24).
+usuario_openvas: é o nome de usuário para acessar o OpenVAS.
+senha_openvas: é a senha de acesso para o OpenVAS.
+arquivo_saida_openvas: é o nome do arquivo de saída do OpenVAS.
+Por exemplo, se você salvou o script com o nome "script-rede.sh", definiu a rede a ser analisada como "192.168.0.0/24", o nome de usuário do OpenVAS como "admin", a senha do OpenVAS como "senha123" e o arquivo de saída do OpenVAS como "output.xml", o comando de execução seria o seguinte:
+
+$ ./openvasturbo.sh 192.168.0.0/24 admin senha123 output.xml
