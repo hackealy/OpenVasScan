@@ -1,15 +1,24 @@
 #!/bin/bash
 
-# Scan network hosts for open ports
-nmap -v -sS -T4 -p- -oA nmap_scan_results $1
+# Definindo variáveis
+alvo=$1
+usuario_openvas=$2
+senha_openvas=$3
+arquivo_saida_openvas=$4
+nome_modulo_metasploit=$5
 
-# Scan open ports for services and versions
-nmap -v -sV -T4 -oA nmap_service_scan_results --append-output --version-all $1
+# Escaneamento de portas e serviços com o nmap
+echo "Realizando escaneamento de portas e serviços com o nmap..."
+nmap -sS -sV $alvo > nmap_scan.txt
 
-# Scan for vulnerabilities using OpenVAS
-for host in $(cat nmap_scan_results.gnmap | grep "Status: Up" | cut -d " " -f 2); do
-  echo "Scanning $host for vulnerabilities"
-  sudo omp -u seu_usuario -w sua_senha --xml='<create_task><name>scan_task</name><comment>Scan for vulnerabilities on host '$host'</comment><config id="c402cc3e-b531-11e2-916a-406186ea4fc5"/><target id="'$host'"/></create_task>' > /dev/null
-done
+# Escaneamento de vulnerabilidades com o OpenVAS
+echo "Realizando escaneamento de vulnerabilidades com o OpenVAS..."
+openvas-cli --target=$alvo --username=$usuario_openvas --password=$senha_openvas --verbose --xml=$arquivo_saida_openvas
 
-echo "Done scanning for vulnerabilities"
+# Importação do resultado do OpenVAS no Metasploit
+echo "Importando resultados do OpenVAS no Metasploit..."
+msfconsole -q -x "db_import $arquivo_saida_openvas; exit"
+
+# Seleção e execução do módulo de exploit no Metasploit
+echo "Selecionando e executando módulo de exploit no Metasploit..."
+msfconsole -q -x "use $nome_modulo_metasploit; set RHOSTS $alvo; run; exit"
