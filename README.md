@@ -23,3 +23,12 @@ Neste exemplo, o script recebe cinco parâmetros: o alvo a ser testado, o usuár
 O script começa realizando um escaneamento de portas e serviços com o nmap, salvando o resultado em um arquivo de texto. Em seguida, é realizado um escaneamento de vulnerabilidades com o OpenVAS, salvando o resultado em um arquivo XML.
 
 O resultado do OpenVAS é importado no Metasploit e, por fim, o módulo de exploit é selecionado e executado no Metasploit, configurado com o alvo identificado pelo nmap e OpenVAS.
+
+-------------------------------------------------------------------------------------------------------- 
+Openvas Turbo:
+
+Neste exemplo, o script começa realizando o escaneamento de hosts ativos com o nmap, coletando as informações sobre os hosts ativos em um arquivo de texto chamado "hosts.txt".
+
+Em seguida, o script utiliza o OpenVAS para realizar o escaneamento de vulnerabilidades em cada host ativo, salvando o resultado em arquivos com o nome de cada host.
+
+Por fim, o script utiliza o Metasploit para identificar as vulnerabilidades encontradas em cada host e selecionar e executar o módulo de exploit correto para cada falha.
